@@ -1,5 +1,7 @@
 #/bin/bash
 
+# TODO: convert to  SnpIndelProximityFilter.py
+
 read -r -d '' USAGE <<'EOF'
 Filter merged VCF file to include or exclude calls based on value of "set" INFO field
 
@@ -88,9 +90,7 @@ else
 fi
 
 export PYTHONPATH="/opt/MergeFilterVCF/src:$PYTHONPATH"
-
 MERGE_FILTER="vcf_filter.py --no-filtered --local-script merge_filter.py"  # filter module
-
 CMD="$MERGE_FILTER $VCF merge $MERGE_ARG "
 
 if [ "$OUT_VCF" ]; then

@@ -9,4 +9,5 @@ Houxiang Zhu writes,
         chr3  10149875    .    CT   C
 
 
+vep_filtered.minimal.vcf has just three variants, the indel and snp of interest, and another snp
 

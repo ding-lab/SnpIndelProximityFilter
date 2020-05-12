@@ -18,10 +18,10 @@ def eprint(*args, **kwargs):
 
 # based on old/varscan_vcf_remap.py:remap_vcf()
 
-def get_indels(f):
-    vcf_reader = vcf.Reader(fsock=f)
-
-    for record in vcf_reader:
+#def get_indels(f):
+#    vcf_reader = vcf.Reader(fsock=f)
+##
+#    for record in vcf_reader:
 
       #  Continue here - go through all 
       # variants, and if is an indel, add to dictionary of lists,,
@@ -29,7 +29,7 @@ def get_indels(f):
       # where record_end = record.start + len( record.REF )
 
 
-class SnvIndelProximityFilter(vcf.filters.Base)
+class SnvIndelProximityFilter(vcf.filters.Base):
     'Filter variant sites by variant allele frequency (VAF)'
 
     name = 'proximity'
@@ -54,6 +54,7 @@ class SnvIndelProximityFilter(vcf.filters.Base)
 
 
     def __call__(self, record):
+        return "hello"
 
 # if record is snv:
 #   for indel in self.indels[record.chrom]:
