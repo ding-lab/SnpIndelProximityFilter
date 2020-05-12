@@ -36,8 +36,10 @@ export PYTHONPATH="/opt/SnpIndelProximityFilter/src:$PYTHONPATH"
 PYTHON="/usr/local/bin/python"
 VCF_FILTER="/usr/local/bin/vcf_filter.py"
 
-MERGE_FILTER="$PYTHON $VCF_FILTER $FILTER $OUTPUT --local-script SnpIndelProximityFilter.py "  # filter module
-CMD="$MERGE_FILTER $INPUT proximity --vcf $INPUT $ARGS "
+PROX_FILTER="$PYTHON $VCF_FILTER $FILTER $OUTPUT --local-script SnpIndelProximityFilter.py "  # filter module
+
+# Need to pass VCF twice - once to VCF_FILTER and once to the Proximity Filter
+CMD="$PROX_FILTER $INPUT proximity --vcf $INPUT $ARGS "
 
 #MERGE_FILTER="$PYTHON $VCF_FILTER $FILTER $OUTPUT --local-script DemoFilter.py"  # filter module
 #CMD="$MERGE_FILTER $INPUT sq $ARGS "
