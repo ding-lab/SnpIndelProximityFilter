@@ -36,11 +36,11 @@ export PYTHONPATH="/opt/SnpIndelProximityFilter/src:$PYTHONPATH"
 PYTHON="/usr/local/bin/python"
 VCF_FILTER="/usr/local/bin/vcf_filter.py"
 
-#MERGE_FILTER="$PYTHON $VCF_FILTER $FILTER $OUTPUT --local-script SnpIndelProximityFilter.py"  # filter module
-#CMD="$MERGE_FILTER $INPUT proximity $ARGS "
+MERGE_FILTER="$PYTHON $VCF_FILTER $FILTER $OUTPUT --local-script SnpIndelProximityFilter.py "  # filter module
+CMD="$MERGE_FILTER $INPUT proximity --vcf $INPUT $ARGS "
 
-MERGE_FILTER="$PYTHON $VCF_FILTER $FILTER $OUTPUT --local-script DemoFilter.py"  # filter module
-CMD="$MERGE_FILTER $INPUT sq $ARGS "
+#MERGE_FILTER="$PYTHON $VCF_FILTER $FILTER $OUTPUT --local-script DemoFilter.py"  # filter module
+#CMD="$MERGE_FILTER $INPUT sq $ARGS "
 
 run_cmd "$CMD" $DRYRUN
 

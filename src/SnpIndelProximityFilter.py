@@ -1,6 +1,7 @@
 from __future__ import print_function
 import sys
 import vcf.filters
+import vcf
 import os.path
 
 
@@ -18,10 +19,12 @@ def eprint(*args, **kwargs):
 
 # based on old/varscan_vcf_remap.py:remap_vcf()
 
-#def get_indels(f):
-#    vcf_reader = vcf.Reader(fsock=f)
-##
-#    for record in vcf_reader:
+def get_indels(vcf_fn):
+    vcf_reader = vcf.Reader(open(vcf_fn, 'r'))
+
+    for record in vcf_reader:
+        print(record)
+        
 
       #  Continue here - go through all 
       # variants, and if is an indel, add to dictionary of lists,,
@@ -36,8 +39,9 @@ class SnvIndelProximityFilter(vcf.filters.Base):
 
     @classmethod
     def customize_parser(self, parser):
-        parser.add_argument('--distance', type=int, help='Minimum distance between snv and nearest indel required to retain snv call')
+        parser.add_argument('--distance', type=int, default=5, help='Minimum distance between snv and nearest indel required to retain snv call')
         parser.add_argument('--debug', action="store_true", default=False, help='Print debugging information to stderr')
+        parser.add_argument('--vcf', type=str, help='VCF file being processed')
         
     def __init__(self, args):
         self.debug = args.debug
@@ -47,7 +51,8 @@ class SnvIndelProximityFilter(vcf.filters.Base):
         self.__doc__ = "Retain SNV variants where distance to nearest indel <= %d" % (self.distance)
 
         # pre-parse VCF file to get indels record
-        self.indels = get_indels(args.input)
+#        self.indels = get_indels(args.vcf)
+
             
     def filter_name(self):
         return self.name
