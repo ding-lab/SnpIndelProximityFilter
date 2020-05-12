@@ -1,1 +1,1 @@
-IMAGE="mwyczalkowski/vld_filter_vcf"
+IMAGE="mwyczalkowski/snp_indel_proximity_filter"

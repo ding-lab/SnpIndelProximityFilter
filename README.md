@@ -1,17 +1,18 @@
-# VLD_FilterVCF
+# SnpIndelProximityFilter
 
-A series of VCF filters which exclude calls based on specific criteria.  The filters are,
-* vaf_filter - Filters VCF files according to tumor, normal VAF values
-* length_filter - Filters VCF files according to indel length:
-* depth_filter - Filters VCF files according to tumor, normal read depth
-* AD_filter - Filters VCF files according to allelic depth for alternate allele
+Flag all SNP variants within a given distance of an indel
 
-Note that varscan VCFs must first pass through a remapping to normalize AD and RD fields.
-See https://github.com/ding-lab/varscan_vcf_remap.git
+```
+git clone --recursive https://github.com/ding-lab/SnpIndelProximityFilter.git
+```
+TODO: confirm above 
 
-Code based on https://github.com/ding-lab/TinDaisy-Core  TinDaisy-Core/src/vcf_filters
+## WUDocker
+WUDocker is used for testing purposes
+    https://github.com/ding-lab/WUDocker.git
 
-## Contact
+
+# Contact
 
 Matt Wyczalkowski (m.wyczalkowski@wustl.edu)
 
