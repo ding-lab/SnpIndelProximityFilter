@@ -1,8 +1,8 @@
-# Launch docker environment for testing mutect-tool
+# Launch docker environment for testing SnpIndelProximityFilter
 
 SYSTEM=docker   # MGI and compute1
-IMAGE="mwyczalkowski/hotspot_filter:20200428"
-START_DOCKERD="~/Projects/WUDocker"  # https://github.com/ding-lab/WUDocker.git
+IMAGE="mwyczalkowski/snp_indel_proximity_filter:latest"
+START_DOCKERD="../../docker/WUDocker"  # https://github.com/ding-lab/WUDocker.git
 
 VOLUME_MAPPING="../demo_data:/data"
 

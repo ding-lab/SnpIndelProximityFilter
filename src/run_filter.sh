@@ -1,7 +1,5 @@
 #/bin/bash
 
-# TODO: finish implementation and test with run_filter_simple inputs
-
 read -r -d '' USAGE <<'EOF'
 Filter all SNP variants within a given distance of an indel
 
