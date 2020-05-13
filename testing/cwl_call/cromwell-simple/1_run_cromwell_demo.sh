@@ -5,9 +5,8 @@ source /opt/lsf9/conf/lsf.conf
 
 CONFIG="cromwell-config-db.dat"
 
-#CWL="/gscuser/mwyczalk/projects/TinDaisy/TinDaisy/cwl/mutect-tool/cwl/mutect.cwl"
-CWL="../../../cwl/hotspotfilter.cwl"
-YAML="cwl-yaml/HotspotFilter_demo.yaml"
+CWL="../../../cwl/snp_indel_proximity_filter.cwl"
+YAML="cwl-yaml/SnpIndelProximityFilter_demo.yaml"
 
 
 CROMWELL="/usr/local/cromwell/cromwell-47.jar"
@@ -27,4 +26,3 @@ if [[ $rc != 0 ]]; then
     exit $rc;
 fi
 
-# /gscmnt/gc7210/dinglab/medseq/shared/Users/mwyczalk/ad-hoc/demo-data/Homo_sapiens_assembly19.COST16011_region.dict
