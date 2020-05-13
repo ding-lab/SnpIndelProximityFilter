@@ -1,7 +1,7 @@
 # Launch docker environment for testing SnpIndelProximityFilter
 
 SYSTEM=docker   # MGI and compute1
-IMAGE="mwyczalkowski/snp_indel_proximity_filter:latest"
+IMAGE="mwyczalkowski/snp_indel_proximity_filter:20200513"
 START_DOCKERD="../../docker/WUDocker"  # https://github.com/ding-lab/WUDocker.git
 
 VOLUME_MAPPING="../demo_data:/data"
