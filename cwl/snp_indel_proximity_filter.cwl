@@ -9,7 +9,6 @@ inputs:
     type: File
     inputBinding:
       position: 10
-      prefix: ''
     label: VCF file
   - id: debug
     type: boolean?
