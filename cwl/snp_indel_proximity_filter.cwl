@@ -8,8 +8,8 @@ inputs:
   - id: input
     type: File
     inputBinding:
-      position: 0
-      prefix: '-i'
+      position: 10
+      prefix: ''
     label: VCF file
   - id: debug
     type: boolean?
@@ -39,7 +39,8 @@ outputs:
       glob: output/ProximityFiltered.vcf
 label: snp_indel_proximity_filter
 arguments:
-  - position: 99
+  - position: 0
+    prefix: '-o'
     valueFrom: output/ProximityFiltered.vcf
 requirements:
   - class: ResourceRequirement
