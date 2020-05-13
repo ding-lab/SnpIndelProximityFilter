@@ -1,8 +1,8 @@
 # cwltool --make-template snp_indel_proximity_filter.cwl
 
-#remove_filtered: false  # type "boolean" (optional)
-#distance: 0  # type "int" (optional)
-#debug: false  # type "boolean" (optional)
+remove_filtered: false  # type "boolean" (optional)
+distance: 5  # type "int" (optional)
+debug: false  # type "boolean" (optional)
 input:  # type "File"
     class: File
     path: /gscuser/mwyczalk/projects/TinDaisy/SnpIndelProximityFilter/testing/demo_data/vep_filtered.vcf
