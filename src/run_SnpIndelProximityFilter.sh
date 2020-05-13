@@ -4,7 +4,7 @@ read -r -d '' USAGE <<'EOF'
 Filter all SNP variants within a given distance of an indel
 
 Usage:
-  bash run_filter.sh [options] input.vcf
+  bash run_SnpIndelProximityFilter.sh [options] input.vcf
 
 Options:
 -h: Print this help message
