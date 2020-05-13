@@ -60,6 +60,7 @@ class SnvIndelProximityFilter(vcf.filters.Base):
 
     def __call__(self, record):
         return "hello"
+#        return 
 
 # if record is snv:
 #   for indel in self.indels[record.chrom]:

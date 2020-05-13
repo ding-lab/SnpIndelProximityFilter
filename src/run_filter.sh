@@ -1,56 +1,46 @@
 #/bin/bash
 
-# TODO: convert to  SnpIndelProximityFilter.py
+# TODO: finish implementation and test with run_filter_simple inputs
 
 read -r -d '' USAGE <<'EOF'
-Filter merged VCF file to include or exclude calls based on value of "set" INFO field
+Filter all SNP variants within a given distance of an indel
 
 Usage:
   bash run_filter.sh [options] input.vcf
 
 Options:
 -h: Print this help message
--d: Dry run - output commands but do not execute them
+-d: Dry run. output commands but do not execute them
 -v: print filter debug information
--o OUT_VCF : Output VCF filename.  Default: write to stdout
--B: bypass this filter, i.e., do not remove any calls
--I include_list: Retain only calls with given caller(s); comma-separated list
--X exclude_list: Exclude all calls with given caller(s); comma-separated list
-
-Arguments -I and -X are mutually exclusive.  If neither is defined, the default is,
--X varscan_indel,GATK_indel
-
+-o OUTPUT : Output filename.  Directory will be created.  Default: write to stdout
+-D distance: Minimum distance between snv and nearest indel required to retain snv call
+-N: remove filtered variants.  Default is to retain filtered variants with "proximity" in VCF FILTER field
 EOF
 
-source /opt/MergeFilterVCF/src/utils.sh
+source /opt/SnpIndelProximityFilter/src/utils.sh
 SCRIPT=$(basename $0)
 
-EXCLUDE_DEFAULT="varscan_indel,GATK_indel"
-
 # http://wiki.bash-hackers.org/howto/getopts_tutorial
-while getopts ":hdvo:BI:X:" opt; do
+while getopts ":hdvo:D:N" opt; do
   case $opt in
     h)
       echo "$USAGE"
       exit 0
       ;;
-    d)  # binary argument
+    d)  
       DRYRUN=1
       ;;
-    v)  # binary argument
-      MERGE_ARG="$MERGE_ARG --debug"
+    v)  
+      ARGS="$ARGS --debug"
       ;;
-    o) # value argument
-      OUT_VCF="$OPTARG"
+    o) 
+      OUTPUT="$OPTARG"
       ;;
-    B)  # binary argument
-      MERGE_ARG="$MERGE_ARG --bypass"
+    D) 
+      ARGS="$ARGS --distance $OPTARG"
       ;;
-    I) # value argument
-      INCLUDE="$OPTARG"
-      ;;
-    X) # value argument
-      EXCLUDE="$OPTARG"
+    N)  
+      FILTER="--no-filtered" 
       ;;
     \?)
       >&2 echo "Invalid option: -$OPTARG"
@@ -71,30 +61,28 @@ if [ "$#" -ne 1 ]; then
     >&2 echo "$USAGE"
     exit 1
 fi
-VCF=$1; shift
-confirm $VCF
+INPUT=$1; shift
+confirm $INPUT
 
-if [ "$INCLUDE" ]; then
-    if  [ "$EXCLUDE" ]; then
-        >&2 echo ERROR: -I INCLUDE and -X EXCLUDE are mutually exclusive
-        >&2 echo "$USAGE"
-        exit 1
-    else
-        MERGE_ARG="$MERGE_ARG --include $INCLUDE"
-    fi
-else
-    if  [ -z "$EXCLUDE" ]; then
-        EXCLUDE=$EXCLUDE_DEFAULT
-    fi
-    MERGE_ARG="$MERGE_ARG --exclude $EXCLUDE"
+if [ $OUTPUT ]; then
+    # Make output dir
+    OUTDIR=$(dirname $OUTPUT)
+    CMD="mkdir -p $OUTDIR"
+    run_cmd "$CMD" $DRYRUN
 fi
 
-export PYTHONPATH="/opt/MergeFilterVCF/src:$PYTHONPATH"
-MERGE_FILTER="vcf_filter.py --no-filtered --local-script merge_filter.py"  # filter module
-CMD="$MERGE_FILTER $VCF merge $MERGE_ARG "
+export PYTHONPATH="/opt/SnpIndelProximityFilter/src:$PYTHONPATH"
 
-if [ "$OUT_VCF" ]; then
-    CMD="$CMD > $OUT_VCF"
+PYTHON="/usr/local/bin/python"
+VCF_FILTER="/usr/local/bin/vcf_filter.py"
+
+PROX_FILTER="$PYTHON $VCF_FILTER $FILTER --local-script SnpIndelProximityFilter.py "  # filter module
+
+# Need to pass VCF twice - once to VCF_FILTER and once to the Proximity Filter
+CMD="$PROX_FILTER $INPUT proximity --vcf $INPUT $ARGS "
+
+if [ $OUTPUT ]; then
+    CMD="$CMD > $OUTPUT"
 fi
 
 run_cmd "$CMD" $DRYRUN
