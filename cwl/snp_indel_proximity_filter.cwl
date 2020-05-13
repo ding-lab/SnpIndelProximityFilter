@@ -1,31 +1,29 @@
 class: CommandLineTool
 cwlVersion: v1.0
-id: varscan_vcf_remap
+id: snp_indel_proximity_filter
 baseCommand:
-  - /usr/local/bin/python
-  - /opt/varscan_vcf_remap/src/varscan_vcf_remap.py
+  - /bin/bash
+  - /opt/SnpIndelProximityFilter/src/run_SnpIndelProximityFilter.sh 
 inputs:
   - id: input
     type: File
     inputBinding:
       position: 0
-      prefix: '--input'
+      prefix: '-i'
     label: VCF file
-  - id: output
-    type: string
-    inputBinding:
-      position: 0
-      prefix: '--output'
-    label: output VCF file name
 outputs:
-  - id: remapped_VCF
+  - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output)
-label: varscan_vcf_remap
+      glob: output/ProximityFiltered.vcf
+label: snp_indel_proximity_filter
+arguments:
+  - position: 99
+#    prefix: ''
+    valueFrom: output/ProximityFiltered.vcf
 requirements:
   - class: DockerRequirement
-    dockerPull: 'mwyczalkowski/varscan_vcf_remap:20191228'
+    dockerPull: 'mwyczalkowski/snp_indel_proximity_filter:20200513'
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     ramMin: 2000

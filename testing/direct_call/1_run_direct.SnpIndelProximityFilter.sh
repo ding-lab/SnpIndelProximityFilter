@@ -7,7 +7,6 @@ INPUT="/opt/SnpIndelProximityFilter/testing/demo_data/vep_filtered.vcf"
 OUTD="./test_out"
 OUT="$OUTD/SIPF.vcf"
 
-/bin/bash /opt/SnpIndelProximityFilter/src/run_filter.sh -o $OUT $@ $INPUT
-#/bin/bash /opt/SnpIndelProximityFilter/src/run_filter.sh $@ $INPUT
+/bin/bash /opt/SnpIndelProximityFilter/src/run_SnpIndelProximityFilter.sh -o $OUT $@ $INPUT
 
 echo Written to $OUT

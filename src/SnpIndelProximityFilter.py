@@ -17,7 +17,7 @@ def eprint(*args, **kwargs):
 # Returns dictionary indexed by chrom of lists; 
 # each list contains tuples of (indel.start, indel.end),
 #   with start given by POS and end given by POS + len(REF)
-# TODO: confirm off-by-one issues
+# Both start and end are in base-0
 def get_indels(vcf_fn):
     vcf_reader = vcf.Reader(open(vcf_fn, 'r'))
 
@@ -27,7 +27,7 @@ def get_indels(vcf_fn):
             if record.CHROM not in indels:
                 indels[record.CHROM] = []
             start = record.POS
-            end = record.POS + len(record.REF)
+            end = record.POS + len(record.REF) - 1  # -1 so in base 0
             indels[record.CHROM].append( (start, end) )
         
     return indels
@@ -48,7 +48,7 @@ class SnvIndelProximityFilter(vcf.filters.Base):
         self.distance = args.distance
 
         # below becomes Description field in VCF
-        self.__doc__ = "Retain SNV variants where distance to nearest indel <= %d" % (self.distance)
+        self.__doc__ = "Retain SNV variants where distance to nearest indel >= %d" % (self.distance)
 
         # pre-parse VCF file to get indels record
         self.indels = get_indels(args.vcf)

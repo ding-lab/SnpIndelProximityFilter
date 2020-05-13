@@ -11,7 +11,7 @@ Options:
 -d: Dry run. output commands but do not execute them
 -v: print filter debug information
 -o OUTPUT : Output filename.  Directory will be created.  Default: write to stdout
--D distance: Minimum distance between snv and nearest indel required to retain snv call
+-D distance: Minimum distance between snv and nearest indel required to retain snv call.  Default is 5
 -N: remove filtered variants.  Default is to retain filtered variants with "proximity" in VCF FILTER field
 EOF
 
